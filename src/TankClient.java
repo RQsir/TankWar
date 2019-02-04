@@ -4,10 +4,22 @@ import java.awt.event.WindowEvent;
 
 public class TankClient extends Frame {
 
+    @Override
+    public void paint(Graphics g) {  // draw a circle represented for tank
+        Color c = g.getColor();
+        g.setColor(Color.red);
+        g.fillOval(100,100,50,50);
+        g.setColor(c);
+    }
+
+
+
     public void lanchFrame(){
         this.setLocation(400,300);
         this.setSize(800,600);
         this.setVisible(true);
+        this.setBackground(Color.green);
+        this.setTitle("TankWar");
 
         //add close window function
         this.addWindowListener(new WindowAdapter() {
