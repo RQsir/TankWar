@@ -4,6 +4,11 @@ import java.awt.event.WindowEvent;
 
 public class TankClient extends Frame {
 
+    //constant
+    public static final int GAME_WIDTH = 900;
+    public static final int GAME_HEIGHT = 800;
+
+
     int x = 100, y = 100;
 
     //create a virtual screen image for double-buffer
@@ -21,13 +26,13 @@ public class TankClient extends Frame {
     @Override
     public void update(Graphics g) {
         if(offScreenImage == null)
-            offScreenImage = this.createImage(800,600);
+            offScreenImage = this.createImage(GAME_WIDTH,GAME_HEIGHT);
         Graphics offScreenPaintor = offScreenImage.getGraphics();
 
         //refresh bg
         Color c = offScreenPaintor.getColor();
         offScreenPaintor.setColor(Color.green);
-        offScreenPaintor.fillRect(0,0,800,600);
+        offScreenPaintor.fillRect(0,0,GAME_WIDTH,GAME_HEIGHT);
         offScreenPaintor.setColor(c);
 
         paint(offScreenPaintor);
@@ -37,7 +42,7 @@ public class TankClient extends Frame {
 
     public void lanchFrame(){
         this.setLocation(400,300);
-        this.setSize(800,600);
+        this.setSize(GAME_WIDTH,GAME_HEIGHT);
         this.setVisible(true);
         this.setBackground(Color.green);
         this.setTitle("TankWar");
