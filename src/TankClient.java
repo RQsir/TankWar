@@ -5,6 +5,10 @@ import java.awt.event.WindowEvent;
 public class TankClient extends Frame {
 
     int x = 100, y = 100;
+
+    //create a virtual screen image for double-buffer
+    Image offScreenImage = null;
+
     @Override
     public void paint(Graphics g) {  // draw a circle represented for tank
         Color c = g.getColor();
@@ -14,7 +18,22 @@ public class TankClient extends Frame {
         x += 5;
     }
 
+    @Override
+    public void update(Graphics g) {
+        if(offScreenImage == null)
+            offScreenImage = this.createImage(800,600);
+        Graphics offScreenPaintor = offScreenImage.getGraphics();
 
+        //refresh bg
+        Color c = offScreenPaintor.getColor();
+        offScreenPaintor.setColor(Color.green);
+        offScreenPaintor.fillRect(0,0,800,600);
+        offScreenPaintor.setColor(c);
+
+        paint(offScreenPaintor);
+        g.drawImage(offScreenImage,0,0,null);
+
+    }
 
     public void lanchFrame(){
         this.setLocation(400,300);
@@ -53,7 +72,7 @@ public class TankClient extends Frame {
                 repaint();
 
                 try {
-                    Thread.sleep(100);
+                    Thread.sleep(50);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
