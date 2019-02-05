@@ -11,17 +11,14 @@ public class TankClient extends Frame {
     public static final int GAME_HEIGHT = 800;
 
 
-    int x = 100, y = 100;
+    Tank myTank = new Tank(50,50);
 
     //create a virtual screen image for double-buffer
     Image offScreenImage = null;
 
     @Override
     public void paint(Graphics g) {  // draw a circle represented for tank
-        Color c = g.getColor();
-        g.setColor(Color.red);
-        g.fillOval(x, y,50,50);
-        g.setColor(c);
+       myTank.draw(g);
     }
 
     @Override
@@ -94,21 +91,7 @@ public class TankClient extends Frame {
     private class KeyMonitor extends KeyAdapter{
         @Override
         public void keyPressed(KeyEvent e) {
-            int key = e.getKeyCode();
-           switch (key){
-               case KeyEvent.VK_UP:
-                   y -= 5;
-                   break;
-               case KeyEvent.VK_RIGHT:
-                   x += 5;
-                   break;
-               case KeyEvent.VK_DOWN:
-                   y += 5;
-                   break;
-               case KeyEvent.VK_LEFT:
-                   x -= 5;
-                   break;
-           }
+           myTank.keyPressed(e);
         }
     }
 }
