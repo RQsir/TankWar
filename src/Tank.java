@@ -7,6 +7,7 @@ public class Tank {
     private static final int X_SPEED = 5;
     private static final int Y_SPEED = 5;
 
+
     //define 9 directions
     enum Directiton{L,LU,U,RU,R,RD,D,LD,STOP}
 
@@ -88,6 +89,24 @@ public class Tank {
         }
     }
 
+    public void keyReleased(KeyEvent e) {
+        int key = e.getKeyCode();
+        switch (key){
+            case KeyEvent.VK_UP:
+                bU = false;
+                break;
+            case KeyEvent.VK_RIGHT:
+                bR = false;
+                break;
+            case KeyEvent.VK_DOWN:
+                bD = false;
+                break;
+            case KeyEvent.VK_LEFT:
+                bL = false;
+                break;
+        }
+    }
+
     public void getDirection(){
         if(bL==true && !bU==true && !bR == true && !bD == true){
             d = Directiton.L;
@@ -112,6 +131,7 @@ public class Tank {
         }
         else if(bL==true && !bU==true && !bR == true && !bD == true){
             d = Directiton.LD;
-        }
+        }else
+            d = Directiton.STOP;
     }
 }

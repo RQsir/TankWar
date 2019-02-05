@@ -23,6 +23,7 @@ public class TankClient extends Frame {
 
     @Override
     public void update(Graphics g) {
+
         if(offScreenImage == null)
             offScreenImage = this.createImage(GAME_WIDTH,GAME_HEIGHT);
         Graphics offScreenPaintor = offScreenImage.getGraphics();
@@ -33,7 +34,10 @@ public class TankClient extends Frame {
         offScreenPaintor.fillRect(0,0,GAME_WIDTH,GAME_HEIGHT);
         offScreenPaintor.setColor(c);
 
+        //draw a tank on virtual screen
         paint(offScreenPaintor);
+
+        //mapping virtual screen to physical screen
         g.drawImage(offScreenImage,0,0,null);
 
     }
@@ -92,6 +96,11 @@ public class TankClient extends Frame {
         @Override
         public void keyPressed(KeyEvent e) {
            myTank.keyPressed(e);
+        }
+
+        @Override
+        public void keyReleased(KeyEvent e) {
+            myTank.keyReleased(e);
         }
     }
 }
