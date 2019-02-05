@@ -1,4 +1,6 @@
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -20,7 +22,6 @@ public class TankClient extends Frame {
         g.setColor(Color.red);
         g.fillOval(x, y,50,50);
         g.setColor(c);
-        x += 5;
     }
 
     @Override
@@ -60,6 +61,9 @@ public class TankClient extends Frame {
 
         //invoke PaintThread
         new Thread(new PaintThread()).start();
+
+        //invoke Key_Listener
+        this.addKeyListener(new KeyMonitor());
     }
 
     public static void main(String[] args){
@@ -77,12 +81,34 @@ public class TankClient extends Frame {
                 repaint();
 
                 try {
-                    Thread.sleep(50);
+                    Thread.sleep(100);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
 
+        }
+    }
+
+    //add key-listener to control the tank
+    private class KeyMonitor extends KeyAdapter{
+        @Override
+        public void keyPressed(KeyEvent e) {
+            int key = e.getKeyCode();
+           switch (key){
+               case KeyEvent.VK_UP:
+                   y -= 5;
+                   break;
+               case KeyEvent.VK_RIGHT:
+                   x += 5;
+                   break;
+               case KeyEvent.VK_DOWN:
+                   y += 5;
+                   break;
+               case KeyEvent.VK_LEFT:
+                   x -= 5;
+                   break;
+           }
         }
     }
 }
