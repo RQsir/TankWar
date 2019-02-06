@@ -12,7 +12,7 @@ public class TankClient extends Frame {
 
     //init instance
     Missile missile = null;
-    Tank myTank = new Tank(50,50, this);
+    Tank myTank = new Tank(Tank.WIDTH, Tank.HEIGHT, this);
 
     //create a virtual screen image for double-buffer
     Image offScreenImage = null;

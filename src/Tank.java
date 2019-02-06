@@ -7,15 +7,19 @@ public class Tank {
     private Missile m;
     private TankClient tc;
 
-    private static final int X_SPEED = 5;
-    private static final int Y_SPEED = 5;
+    public static final int X_SPEED = 5;
+    public static final int Y_SPEED = 5;
+    public static final int WIDTH = 50;
+    public static final int HEIGHT = 50;
 
 
     //define 9 directions
     enum Directiton{L,LU,U,RU,R,RD,D,LD,STOP}
 
     //init tank condition
-    Directiton d = Directiton.STOP;
+    Directiton dir = Directiton.STOP;
+    //define barrel direction
+    Directiton bDir = Directiton.D;
 
     //define 4 button values represented for left, up, right, down
     private boolean bL = false, bU = false, bR = false, bD = false;
@@ -35,7 +39,7 @@ public class Tank {
 
         getDirection();
 
-        switch (d){
+        switch (dir){
             case L:
                 x -= X_SPEED;
                 break;
@@ -73,8 +77,41 @@ public class Tank {
     public void draw(Graphics g){
         Color c = g.getColor();
         g.setColor(Color.red);
-        g.fillOval(x, y,50,50);
+        g.fillOval(x, y,WIDTH,HEIGHT);
+
+        //add a barrel for tank
+        g.setColor(Color.BLACK);
+        switch (bDir){
+            case L:
+                g.drawLine(x+WIDTH/2,y+HEIGHT/2,x,y+HEIGHT/2);
+                break;
+            case LU:
+                g.drawLine(x+WIDTH/2,y+HEIGHT/2,x,y);
+                break;
+            case U:
+                g.drawLine(x+WIDTH/2,y+HEIGHT/2,x+WIDTH/2,y);
+                break;
+            case RU:
+                g.drawLine(x+WIDTH/2,y+HEIGHT/2,x+WIDTH,y);
+                break;
+            case R:
+                g.drawLine(x+WIDTH/2,y+HEIGHT/2,x+WIDTH,y+HEIGHT/2);
+                break;
+            case RD:
+                g.drawLine(x+WIDTH/2,y+HEIGHT/2,x+WIDTH,y+HEIGHT);
+                break;
+            case D:
+                g.drawLine(x+WIDTH/2,y+HEIGHT/2,x+WIDTH/2,y+HEIGHT);
+                break;
+            case LD:
+                g.drawLine(x+WIDTH/2,y+HEIGHT/2,x,y+HEIGHT);
+                break;
+        }
+
         g.setColor(c);
+
+        if(dir != Directiton.STOP)
+            bDir = dir;
 
         move();
     }
@@ -101,8 +138,9 @@ public class Tank {
     }
 
     private void fire() {
-
-        m = new Missile(x, y, d);
+        int x = this.x + Tank.WIDTH/2 - Missile.WIDTH/2;
+        int y = this.y + Tank.HEIGHT/2 - Missile.HEIGHT/2;
+        m = new Missile(x, y, bDir);
         tc.missile = m;
     }
 
@@ -126,29 +164,29 @@ public class Tank {
 
     public void getDirection(){
         if(bL==true && !bU==true && !bR == true && !bD == true){
-            d = Directiton.L;
+            dir = Directiton.L;
         }
         else if(bL==true && bU==true && !bR == true && !bD == true){
-            d = Directiton.LU;
+            dir = Directiton.LU;
         }
         else if(!bL==true && bU==true && !bR == true && !bD == true){
-            d = Directiton.U;
+            dir = Directiton.U;
         }
         else if(!bL==true && bU==true && bR == true && !bD == true){
-            d = Directiton.RU;
+            dir = Directiton.RU;
         }
         else if(!bL==true && !bU==true && bR == true && !bD == true){
-            d = Directiton.R;
+            dir = Directiton.R;
         }
         else if(!bL==true && !bU==true && bR == true && bD == true){
-            d = Directiton.RD;
+            dir = Directiton.RD;
         }
         else if(!bL==true && !bU==true && !bR == true && bD == true){
-            d = Directiton.D;
+            dir = Directiton.D;
         }
         else if(bL==true && !bU==true && !bR == true && !bD == true){
-            d = Directiton.LD;
+            dir = Directiton.LD;
         }else
-            d = Directiton.STOP;
+            dir = Directiton.STOP;
     }
 }
