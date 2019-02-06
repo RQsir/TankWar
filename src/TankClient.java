@@ -10,8 +10,9 @@ public class TankClient extends Frame {
     public static final int GAME_WIDTH = 900;
     public static final int GAME_HEIGHT = 800;
 
-
+    //init instance
     Tank myTank = new Tank(50,50);
+    Missile missile = new Missile(50,50, Tank.Directiton.R);
 
     //create a virtual screen image for double-buffer
     Image offScreenImage = null;
@@ -19,6 +20,7 @@ public class TankClient extends Frame {
     @Override
     public void paint(Graphics g) {  // draw a circle represented for tank
        myTank.draw(g);
+       missile.draw(g);
     }
 
     @Override
@@ -34,7 +36,7 @@ public class TankClient extends Frame {
         offScreenPaintor.fillRect(0,0,GAME_WIDTH,GAME_HEIGHT);
         offScreenPaintor.setColor(c);
 
-        //draw a tank on virtual screen
+        //draw goods on virtual screen
         paint(offScreenPaintor);
 
         //mapping virtual screen to physical screen
