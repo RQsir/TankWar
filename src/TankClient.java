@@ -3,6 +3,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TankClient extends Frame {
 
@@ -11,7 +13,7 @@ public class TankClient extends Frame {
     public static final int GAME_HEIGHT = 800;
 
     //init instance
-    Missile missile = null;
+    List<Missile> missiles = new ArrayList<Missile>();
     Tank myTank = new Tank(Tank.WIDTH, Tank.HEIGHT, this);
 
     //create a virtual screen image for double-buffer
@@ -20,8 +22,12 @@ public class TankClient extends Frame {
     @Override
     public void paint(Graphics g) {  // draw a circle represented for tank
        myTank.draw(g);
-       if(missile != null)
-           missile.draw(g);
+       for(int i=0; i<missiles.size(); i++){
+
+           missiles.get(i).draw(g);
+       }
+
+       g.drawString("missiles count:"+missiles.size(),10,30);
     }
 
     @Override

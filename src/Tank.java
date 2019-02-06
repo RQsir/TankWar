@@ -131,9 +131,6 @@ public class Tank {
             case KeyEvent.VK_LEFT:
                 bL = true;
                 break;
-            case KeyEvent.VK_CONTROL:
-                fire();
-                break;
         }
     }
 
@@ -141,7 +138,7 @@ public class Tank {
         int x = this.x + Tank.WIDTH/2 - Missile.WIDTH/2;
         int y = this.y + Tank.HEIGHT/2 - Missile.HEIGHT/2;
         m = new Missile(x, y, bDir);
-        tc.missile = m;
+        tc.missiles.add(m);
     }
 
     public void keyReleased(KeyEvent e) {
@@ -158,6 +155,9 @@ public class Tank {
                 break;
             case KeyEvent.VK_LEFT:
                 bL = false;
+                break;
+            case KeyEvent.VK_CONTROL:
+                fire();
                 break;
         }
     }
