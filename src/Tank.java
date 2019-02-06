@@ -4,6 +4,9 @@ import java.awt.event.KeyEvent;
 public class Tank {
     private int x, y;
 
+    private Missile m;
+    private TankClient tc;
+
     private static final int X_SPEED = 5;
     private static final int Y_SPEED = 5;
 
@@ -20,6 +23,11 @@ public class Tank {
     public Tank(int x, int y) {
         this.x = x;
         this.y = y;
+    }
+
+    public Tank(int x, int y, TankClient tc){
+        this(x,y);
+        this.tc = tc;
     }
 
     //define move function to change x, y position
@@ -86,7 +94,16 @@ public class Tank {
             case KeyEvent.VK_LEFT:
                 bL = true;
                 break;
+            case KeyEvent.VK_CONTROL:
+                fire();
+                break;
         }
+    }
+
+    private void fire() {
+
+        m = new Missile(x, y, d);
+        tc.missile = m;
     }
 
     public void keyReleased(KeyEvent e) {

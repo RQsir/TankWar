@@ -54,9 +54,6 @@ public class Missile {
                 x -= X_SPEED;
                 y += Y_SPEED;
                 break;
-            case STOP:
-                break;
-
         }
     }
 }

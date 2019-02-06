@@ -11,8 +11,8 @@ public class TankClient extends Frame {
     public static final int GAME_HEIGHT = 800;
 
     //init instance
-    Tank myTank = new Tank(50,50);
-    Missile missile = new Missile(50,50, Tank.Directiton.R);
+    Missile missile = null;
+    Tank myTank = new Tank(50,50, this);
 
     //create a virtual screen image for double-buffer
     Image offScreenImage = null;
@@ -20,7 +20,8 @@ public class TankClient extends Frame {
     @Override
     public void paint(Graphics g) {  // draw a circle represented for tank
        myTank.draw(g);
-       missile.draw(g);
+       if(missile != null)
+           missile.draw(g);
     }
 
     @Override
