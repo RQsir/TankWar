@@ -2,8 +2,8 @@ import java.awt.*;
 
 public class Missile {
 
-    public static final int X_SPEED = 10;
-    public static final int Y_SPEED = 10;
+    public static final int X_SPEED = 20;
+    public static final int Y_SPEED = 20;
     public static final int WIDTH = 20;
     public static final int HEIGHT = 20;
 

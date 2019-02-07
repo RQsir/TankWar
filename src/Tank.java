@@ -7,8 +7,8 @@ public class Tank {
     private Missile m;
     private TankClient tc;
 
-    public static final int X_SPEED = 5;
-    public static final int Y_SPEED = 5;
+    public static final int X_SPEED = 10;
+    public static final int Y_SPEED = 10;
     public static final int WIDTH = 50;
     public static final int HEIGHT = 50;
 
@@ -70,8 +70,13 @@ public class Tank {
                 break;
             case STOP:
                 break;
-
         }
+
+        //ensure tank won't break the game's boundary
+        if(x <= 0) x = 0;
+        if(x >= TankClient.GAME_WIDTH-Tank.WIDTH) x = TankClient.GAME_WIDTH-Tank.WIDTH;
+        if(y <= 0) y = 0;
+        if(y >= TankClient.GAME_HEIGHT-Tank.HEIGHT) y = TankClient.GAME_HEIGHT-Tank.HEIGHT;
     }
 
     public void draw(Graphics g){
