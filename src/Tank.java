@@ -1,8 +1,13 @@
+import com.sun.xml.internal.bind.v2.model.core.BuiltinLeafInfo;
+
 import java.awt.*;
 import java.awt.event.KeyEvent;
 
 public class Tank {
     private int x, y;
+
+    //to verify whether a tank belongs to mine or enemies
+    private boolean good;
 
     private Missile m;
     private TankClient tc;
@@ -24,13 +29,14 @@ public class Tank {
     //define 4 button values represented for left, up, right, down
     private boolean bL = false, bU = false, bR = false, bD = false;
 
-    public Tank(int x, int y) {
+    public Tank(int x, int y, boolean good) {
         this.x = x;
         this.y = y;
+        this.good = good;
     }
 
-    public Tank(int x, int y, TankClient tc){
-        this(x,y);
+    public Tank(int x, int y, boolean good ,TankClient tc){
+        this(x,y,good);
         this.tc = tc;
     }
 
@@ -81,7 +87,10 @@ public class Tank {
 
     public void draw(Graphics g){
         Color c = g.getColor();
-        g.setColor(Color.red);
+
+        //set tank's color
+        if(good == true) g.setColor(Color.red);
+        else g.setColor(Color.BLUE);
         g.fillOval(x, y,WIDTH,HEIGHT);
 
         //add a barrel for tank
