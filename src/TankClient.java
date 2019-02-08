@@ -24,7 +24,7 @@ public class TankClient extends Frame {
     public void paint(Graphics g) {  // draw a circle represented for tank
        myTank.draw(g);
        for(int i=0; i<missiles.size(); i++){
-
+           missiles.get(i).isHit(enemyTank);
            missiles.get(i).draw(g);
        }
 

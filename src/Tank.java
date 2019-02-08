@@ -4,10 +4,14 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 
 public class Tank {
-    private int x, y;
+    private int x;
+    private int y;
 
     //to verify whether a tank belongs to mine or enemies
     private boolean good;
+
+    //define tank's lifecycle
+    private boolean alive = true;
 
     private Missile m;
     private TankClient tc;
@@ -86,6 +90,10 @@ public class Tank {
     }
 
     public void draw(Graphics g){
+
+        if(!alive)
+            return;
+
         Color c = g.getColor();
 
         //set tank's color
@@ -124,6 +132,7 @@ public class Tank {
 
         g.setColor(c);
 
+        //synchronize the direction for tank and barrel
         if(dir != Directiton.STOP)
             bDir = dir;
 
@@ -203,4 +212,14 @@ public class Tank {
         }else
             dir = Directiton.STOP;
     }
+
+    //get Rectangle that surrounds the Tank
+    public Rectangle getRect(){
+        return new Rectangle(x, y, WIDTH, HEIGHT);
+    }
+
+    public void setAlive(boolean alive) {
+        this.alive = alive;
+    }
+    public boolean isAlive() { return  this.alive; }
 }
