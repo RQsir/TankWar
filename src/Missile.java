@@ -89,6 +89,11 @@ public class Missile {
         if(this.getRect().intersects(t.getRect()) && t.isAlive()){
             this.alive = false;
             t.setAlive(false);
+
+            //add explosion
+            Explosion e = new Explosion(x, y, tc);
+            tc.explosions.add(e);
+
             return true;
         }
         return false;

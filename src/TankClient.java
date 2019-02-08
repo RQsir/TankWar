@@ -16,23 +16,34 @@ public class TankClient extends Frame {
     List<Missile> missiles = new ArrayList<Missile>();
     Tank myTank = new Tank(50, 50, true, this);
     Tank enemyTank = new Tank(100, 100, false, this);
-    Explosion e = new Explosion(200,200,this);
+    List<Explosion> explosions = new ArrayList<Explosion>();
 
     //create a virtual screen image for double-buffer
     Image offScreenImage = null;
 
     @Override
-    public void paint(Graphics g) {  // draw a circle represented for tank
+    public void paint(Graphics g) {
+       // draw a circle represented for tank
        myTank.draw(g);
+
+       //draw missiles
        for(int i=0; i<missiles.size(); i++){
            missiles.get(i).isHit(enemyTank);
            missiles.get(i).draw(g);
        }
 
+       //draw a enemyTank
        enemyTank.draw(g);
-       g.drawString("missiles count:"+missiles.size(),10,30);
 
-       e.draw(g);
+       //counting missiles
+       g.drawString("missiles count:"+missiles.size(),10,20);
+       //counting explosions
+       g.drawString("explosins count:"+explosions.size(),10,40);
+
+       //draw explosions
+       for(int i=0; i<explosions.size(); i++){
+           explosions.get(i).draw(g);
+       }
     }
 
     @Override

@@ -222,4 +222,5 @@ public class Tank {
         this.alive = alive;
     }
     public boolean isAlive() { return  this.alive; }
+
 }
