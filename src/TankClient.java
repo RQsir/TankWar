@@ -16,6 +16,7 @@ public class TankClient extends Frame {
     List<Missile> missiles = new ArrayList<Missile>();
     Tank myTank = new Tank(50, 50, true, this);
     Tank enemyTank = new Tank(100, 100, false, this);
+    Explosion e = new Explosion(200,200,this);
 
     //create a virtual screen image for double-buffer
     Image offScreenImage = null;
@@ -30,6 +31,8 @@ public class TankClient extends Frame {
 
        enemyTank.draw(g);
        g.drawString("missiles count:"+missiles.size(),10,30);
+
+       e.draw(g);
     }
 
     @Override
