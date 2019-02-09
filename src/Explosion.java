@@ -18,8 +18,10 @@ public class Explosion {
     }
 
     public void draw(Graphics g){
-        if(!alive)
+        if(!alive){
+            tc.explosions.remove(this);
             return;
+        }
 
         if(step == diameter.length){
             alive = false;

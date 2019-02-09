@@ -14,9 +14,10 @@ public class TankClient extends Frame {
 
     //init instance
     List<Missile> missiles = new ArrayList<Missile>();
-    Tank myTank = new Tank(50, 50, true, this);
-    Tank enemyTank = new Tank(100, 100, false, this);
+    Tank myTank = new Tank(50, 50, true, this, Tank.Directiton.STOP);
     List<Explosion> explosions = new ArrayList<Explosion>();
+    List<Tank> enemyTanks = new ArrayList<Tank>();
+
 
     //create a virtual screen image for double-buffer
     Image offScreenImage = null;
@@ -28,17 +29,21 @@ public class TankClient extends Frame {
 
        //draw missiles
        for(int i=0; i<missiles.size(); i++){
-           missiles.get(i).isHit(enemyTank);
+           missiles.get(i).hitTanks(enemyTanks);
            missiles.get(i).draw(g);
        }
 
-       //draw a enemyTank
-       enemyTank.draw(g);
+       //draw enemyTanks
+       for(int i=0; i<enemyTanks.size(); i++){
+           enemyTanks.get(i).draw(g);
+       }
 
        //counting missiles
        g.drawString("missiles count:"+missiles.size(),10,20);
        //counting explosions
        g.drawString("explosins count:"+explosions.size(),10,40);
+       //counting enemyTanks
+       g.drawString("enemyTanks counting:"+enemyTanks.size(),150,20);
 
        //draw explosions
        for(int i=0; i<explosions.size(); i++){
@@ -47,7 +52,7 @@ public class TankClient extends Frame {
     }
 
     @Override
-    public void update(Graphics g) {
+    public void update(Graphics g) {//use double-buffer to eliminate screen flicker
 
         if(offScreenImage == null)
             offScreenImage = this.createImage(GAME_WIDTH,GAME_HEIGHT);
@@ -84,6 +89,12 @@ public class TankClient extends Frame {
 
         //add window size unchangeable
         this.setResizable(false);
+
+        //init enemyTanks
+        for(int i=0; i<5; i++){
+            Tank enemyTank = new Tank(50, 50 + (i+1)*100, false, this, Tank.Directiton.R);
+            enemyTanks.add(enemyTank);
+        }
 
         //invoke PaintThread
         new Thread(new PaintThread()).start();

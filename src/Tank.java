@@ -2,6 +2,7 @@ import com.sun.xml.internal.bind.v2.model.core.BuiltinLeafInfo;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.Random;
 
 public class Tank {
     private int x;
@@ -21,6 +22,8 @@ public class Tank {
     public static final int WIDTH = 50;
     public static final int HEIGHT = 50;
 
+    //define a static random object to control enemyTank's direction
+    private static Random r = new Random();
 
     //define 9 directions
     enum Directiton{L,LU,U,RU,R,RD,D,LD,STOP}
@@ -30,7 +33,7 @@ public class Tank {
     //define barrel direction
     Directiton bDir = Directiton.D;
 
-    //define 4 button values represented for left, up, right, down
+    //define 4 boolean values represented for left, up, right, down
     private boolean bL = false, bU = false, bR = false, bD = false;
 
     public Tank(int x, int y, boolean good) {
@@ -39,15 +42,14 @@ public class Tank {
         this.good = good;
     }
 
-    public Tank(int x, int y, boolean good ,TankClient tc){
+    public Tank(int x, int y, boolean good ,TankClient tc, Directiton dir){
         this(x,y,good);
         this.tc = tc;
+        this.dir = dir;
     }
 
     //define move function to change x, y position
     void move(){
-
-        getDirection();
 
         switch (dir){
             case L:
@@ -87,6 +89,13 @@ public class Tank {
         if(x >= TankClient.GAME_WIDTH-Tank.WIDTH) x = TankClient.GAME_WIDTH-Tank.WIDTH;
         if(y <= 0) y = 0;
         if(y >= TankClient.GAME_HEIGHT-Tank.HEIGHT) y = TankClient.GAME_HEIGHT-Tank.HEIGHT;
+
+        //control enemyTank's direction
+        if(!good){
+            Directiton[] dirs = Directiton.values();
+            int index = r.nextInt(dirs.length);
+            dir = dirs[index];
+        }
     }
 
     public void draw(Graphics g){
@@ -138,7 +147,7 @@ public class Tank {
         //synchronize the direction for tank and barrel
         if(dir != Directiton.STOP)
             bDir = dir;
-
+        //invoked by draw(), that's to be invoked by PaintThread
         move();
     }
 
@@ -158,6 +167,9 @@ public class Tank {
                 bL = true;
                 break;
         }
+
+        //myTank's dir changes only if key pressed, so bind getDirection() with keyPressed()
+        getDirection();
     }
 
     public void fire() {

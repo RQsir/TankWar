@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.util.List;
 
 public class Missile {
 
@@ -27,8 +28,10 @@ public class Missile {
 
     public void draw(Graphics g){
         //judge whether the missile is alive
-        if(!alive)
+        if(!alive){
+            tc.missiles.remove(this);
             return;
+        }
 
         Color c = g.getColor();
         g.setColor(Color.BLACK);
@@ -74,7 +77,6 @@ public class Missile {
         //if missile go out of the game window, remove it from missiles list
         if(x < 0 || y < 0 || x > TankClient.GAME_WIDTH || y > TankClient.GAME_HEIGHT){
             alive = false;
-            tc.missiles.remove(this);
         }
     }
 
@@ -83,7 +85,7 @@ public class Missile {
         return new Rectangle(x, y, WIDTH, HEIGHT);
     }
 
-    public boolean isHit(Tank t){
+    public boolean hitTank(Tank t){
         //use 2 rectangles to surround enemyTank and missile, and use "intersect" function to judge if a
         // missile has hit a tank
         if(this.getRect().intersects(t.getRect()) && t.isAlive()){
@@ -96,6 +98,19 @@ public class Missile {
 
             return true;
         }
+        return false;
+    }
+
+    public boolean hitTanks(List<Tank> enemyTanks) {
+
+        if(enemyTanks.size() > 0){
+
+            for(int i=0; i<enemyTanks.size(); i++){
+                if(hitTank(enemyTanks.get(i)))
+                    return true;
+            }
+        }
+
         return false;
     }
 }
