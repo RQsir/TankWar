@@ -91,8 +91,11 @@ public class Tank {
 
     public void draw(Graphics g){
 
-        if(!alive)
+        if(!alive){
+            if(good == false)
+                tc.enemyTanks.remove(this);
             return;
+        }
 
         Color c = g.getColor();
 
@@ -157,7 +160,7 @@ public class Tank {
         }
     }
 
-    private void fire() {
+    public void fire() {
         int x = this.x + Tank.WIDTH/2 - Missile.WIDTH/2;
         int y = this.y + Tank.HEIGHT/2 - Missile.HEIGHT/2;
         m = new Missile(x, y, bDir, this.tc);
