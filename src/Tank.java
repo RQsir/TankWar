@@ -7,6 +7,8 @@ import java.util.Random;
 public class Tank {
     private int x;
     private int y;
+    private int preX;
+    private int preY;
 
     //to verify whether a tank belongs to mine or enemies
     private boolean good;
@@ -57,6 +59,9 @@ public class Tank {
 
     //define move function to change x, y position
     void move(){
+
+        preX = x;
+        preY = y;
 
         switch (dir){
             case L:
@@ -242,7 +247,7 @@ public class Tank {
         else if(!bL==true && !bU==true && !bR == true && bD == true){
             dir = Directiton.D;
         }
-        else if(bL==true && !bU==true && !bR == true && !bD == true){
+        else if(bL==true && !bU==true && !bR == true && bD == true){
             dir = Directiton.LD;
         }else
             dir = Directiton.STOP;
@@ -260,5 +265,18 @@ public class Tank {
 
     public boolean isGood() {
         return good;
+    }
+
+    public boolean hitWall(Wall w){
+
+        if(this.getRect().intersects(w.getRect())){
+
+           x = preX;
+           y = preY;
+
+            return true;
+        }
+
+        return false;
     }
 }

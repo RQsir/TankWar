@@ -17,6 +17,8 @@ public class TankClient extends Frame {
     Tank myTank = new Tank(50, 50, true, this, Tank.Directiton.STOP);
     List<Explosion> explosions = new ArrayList<Explosion>();
     List<Tank> enemyTanks = new ArrayList<Tank>();
+    Wall w1 = new Wall(530, 400, 50,350);
+    Wall w2 = new Wall(130, 100, 600,50);
 
 
     //create a virtual screen image for double-buffer
@@ -25,7 +27,9 @@ public class TankClient extends Frame {
     @Override
     public void paint(Graphics g) {
        // draw a circle represented for tank
-       myTank.draw(g);
+        myTank.draw(g);
+        myTank.hitWall(w1);
+        myTank.hitWall(w2);
 
        //draw missiles
        for(int i=0; i<missiles.size(); i++){
@@ -33,12 +37,18 @@ public class TankClient extends Frame {
            missiles.get(i).hitTanks(enemyTanks);
            missiles.get(i).hitTank(myTank);
 
+           missiles.get(i).hitWall(w1);
+           missiles.get(i).hitWall(w2);
+
            missiles.get(i).draw(g);
        }
 
        //draw enemyTanks
        for(int i=0; i<enemyTanks.size(); i++){
            enemyTanks.get(i).draw(g);
+
+           enemyTanks.get(i).hitWall(w1);
+           enemyTanks.get(i).hitWall(w2);
        }
 
        //counting missiles
@@ -52,6 +62,10 @@ public class TankClient extends Frame {
        for(int i=0; i<explosions.size(); i++){
            explosions.get(i).draw(g);
        }
+
+       //draw wall
+       w1.draw(g);
+       w2.draw(g);
     }
 
     @Override
@@ -94,8 +108,8 @@ public class TankClient extends Frame {
         this.setResizable(false);
 
         //init enemyTanks
-        for(int i=0; i<5; i++){
-            Tank enemyTank = new Tank(50, 50 + (i+1)*100, false, this, Tank.Directiton.R);
+        for(int i=0; i<8; i++){
+            Tank enemyTank = new Tank(800, (i+1)*100, false, this, Tank.Directiton.R);
             enemyTanks.add(enemyTank);
         }
 

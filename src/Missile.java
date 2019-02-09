@@ -95,6 +95,18 @@ public class Missile {
         return new Rectangle(x, y, WIDTH, HEIGHT);
     }
 
+    public boolean hitWall(Wall w){
+
+        if(this.getRect().intersects(w.getRect()) && !good){
+            this.alive = false;
+
+
+            return true;
+        }
+
+        return false;
+    }
+
     public boolean hitTank(Tank t){
         //use 2 rectangles to surround enemyTank and missile, and use "intersect" function to judge if a
         // missile has hit a tank
