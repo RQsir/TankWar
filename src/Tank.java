@@ -28,6 +28,13 @@ public class Tank {
     //define 9 directions
     enum Directiton{L,LU,U,RU,R,RD,D,LD,STOP}
 
+    //generate dirs arrays
+    Directiton[] dirs = Directiton.values();
+
+    //define tank walk steps
+    private int step = r.nextInt(13) + 3;
+
+
     //init tank condition
     Directiton dir = Directiton.STOP;
     //define barrel direction
@@ -92,9 +99,14 @@ public class Tank {
 
         //control enemyTank's direction
         if(!good){
-            Directiton[] dirs = Directiton.values();
-            int index = r.nextInt(dirs.length);
-            dir = dirs[index];
+
+            step--;
+
+            if(step == 0){
+                step = r.nextInt(13) + 3;
+                int index = r.nextInt(dirs.length);
+                dir = dirs[index];
+            }
         }
     }
 
