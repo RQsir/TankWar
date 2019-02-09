@@ -107,6 +107,10 @@ public class Tank {
                 int index = r.nextInt(dirs.length);
                 dir = dirs[index];
             }
+
+            //let enemyTank shoot
+            if(r.nextInt(30) > 25)
+                fire();
         }
     }
 
@@ -185,9 +189,13 @@ public class Tank {
     }
 
     public void fire() {
+
+        //if a tank is dead, it cannot fire
+        if(!alive)
+            return;
         int x = this.x + Tank.WIDTH/2 - Missile.WIDTH/2;
         int y = this.y + Tank.HEIGHT/2 - Missile.HEIGHT/2;
-        m = new Missile(x, y, bDir, this.tc);
+        m = new Missile(x, y, bDir, this.tc, this.good);
         tc.missiles.add(m);
     }
 
@@ -250,4 +258,7 @@ public class Tank {
     }
     public boolean isAlive() { return  this.alive; }
 
+    public boolean isGood() {
+        return good;
+    }
 }

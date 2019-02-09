@@ -12,6 +12,8 @@ public class Missile {
 
     private boolean alive = true;
 
+    private boolean good;
+
     private int x, y;
     private Tank.Directiton dir;
 
@@ -21,9 +23,10 @@ public class Missile {
         this.dir = dir;
     }
 
-    public Missile(int x, int y, Tank.Directiton dir, TankClient tc){
+    public Missile(int x, int y, Tank.Directiton dir, TankClient tc, boolean good){
         this(x, y, dir);
         this.tc = tc;
+        this.good = good;
     }
 
     public void draw(Graphics g){
@@ -34,8 +37,15 @@ public class Missile {
         }
 
         Color c = g.getColor();
-        g.setColor(Color.BLACK);
-        g.fillOval(x, y, WIDTH,HEIGHT);
+
+        if(good){
+            g.setColor(Color.RED);
+            g.fillOval(x, y, WIDTH,HEIGHT);
+        }else {
+            g.setColor(Color.BLUE);
+            g.fillOval(x, y, WIDTH,HEIGHT);
+        }
+
         g.setColor(c);
 
         move();
@@ -88,7 +98,7 @@ public class Missile {
     public boolean hitTank(Tank t){
         //use 2 rectangles to surround enemyTank and missile, and use "intersect" function to judge if a
         // missile has hit a tank
-        if(this.getRect().intersects(t.getRect()) && t.isAlive()){
+        if(this.getRect().intersects(t.getRect()) && t.isAlive() && this.good != t.isGood() && this.alive){
             this.alive = false;
             t.setAlive(false);
 
