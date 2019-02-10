@@ -205,6 +205,24 @@ public class Tank {
         tc.missiles.add(m);
     }
 
+    public void fire(Directiton dir){
+        //if a tank is dead, it cannot fire
+        if(!alive)
+            return;
+        int x = this.x + Tank.WIDTH/2 - Missile.WIDTH/2;
+        int y = this.y + Tank.HEIGHT/2 - Missile.HEIGHT/2;
+        m = new Missile(x, y, dir, this.tc, this.good);
+        tc.missiles.add(m);
+    }
+
+    public void superFire(){
+
+        for(Directiton dir : dirs){
+            if(dir != Directiton.STOP)
+                fire(dir);
+        }
+    }
+
     public void keyReleased(KeyEvent e) {
         int key = e.getKeyCode();
         switch (key){
@@ -222,6 +240,9 @@ public class Tank {
                 break;
             case KeyEvent.VK_CONTROL:
                 fire();
+                break;
+            case KeyEvent.VK_A:
+                superFire();
                 break;
         }
     }
