@@ -111,8 +111,18 @@ public class Missile {
         //use 2 rectangles to surround enemyTank and missile, and use "intersect" function to judge if a
         // missile has hit a tank
         if(this.getRect().intersects(t.getRect()) && t.isAlive() && this.good != t.isGood() && this.alive){
+
+            if(t.isGood()){
+                t.setLife(t.getLife() - 20);
+                if(t.getLife() <= 0){
+                    t.setAlive(false);
+                }
+            }else {
+
+                t.setAlive(false);
+            }
+
             this.alive = false;
-            t.setAlive(false);
 
             //add explosion
             Explosion e = new Explosion(x, y, tc);

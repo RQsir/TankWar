@@ -16,6 +16,8 @@ public class Tank {
 
     //define tank's lifecycle
     private boolean alive = true;
+    //define tank's life_value
+    private int life = 100;
 
     private Missile m;
     private TankClient tc;
@@ -330,5 +332,13 @@ public class Tank {
         }
 
         return false;
+    }
+
+    public int getLife() {
+        return life;
+    }
+
+    public void setLife(int life) {
+        this.life = life;
     }
 }
