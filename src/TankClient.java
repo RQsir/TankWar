@@ -30,6 +30,7 @@ public class TankClient extends Frame {
         myTank.draw(g);
         myTank.hitWall(w1);
         myTank.hitWall(w2);
+        myTank.collideTanks(enemyTanks);
 
        //draw missiles
        for(int i=0; i<missiles.size(); i++){
@@ -49,6 +50,8 @@ public class TankClient extends Frame {
 
            enemyTanks.get(i).hitWall(w1);
            enemyTanks.get(i).hitWall(w2);
+
+           enemyTanks.get(i).collideTanks(enemyTanks);
        }
 
        //counting missiles

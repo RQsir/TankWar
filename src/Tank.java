@@ -2,6 +2,7 @@ import com.sun.xml.internal.bind.v2.model.core.BuiltinLeafInfo;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.List;
 import java.util.Random;
 
 public class Tank {
@@ -267,14 +268,44 @@ public class Tank {
         return good;
     }
 
+    public void backward(){
+        x = preX;
+        y = preY;
+    }
+
     public boolean hitWall(Wall w){
+
 
         if(this.getRect().intersects(w.getRect())){
 
-           x = preX;
-           y = preY;
-
+            backward();
             return true;
+        }
+
+        return false;
+    }
+
+    public boolean collideTank(Tank t){
+
+        if(this.getRect().intersects(t.getRect())){
+
+            backward();
+            return true;
+        }
+
+        return false;
+    }
+
+    public boolean collideTanks(List<Tank> tanks){
+
+        for (Tank tank:tanks) {
+
+            //avoid collide with itself
+            if(this != tank){
+
+                if(collideTank(tank))
+                    return true;
+            }
         }
 
         return false;
