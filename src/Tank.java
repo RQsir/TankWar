@@ -179,6 +179,7 @@ public class Tank {
 
         //invoked by draw(), that's to be invoked by PaintThread
         move();
+
     }
 
     public void keyPressed(KeyEvent e){
@@ -358,5 +359,17 @@ public class Tank {
             int w = WIDTH*life/100;
             g.fillRect(x,y-20, w,10);
         }
+    }
+
+    public boolean eat(Blood b){
+
+        if(getRect().intersects(b.getRect()) && alive && good && b.isAlive()){
+
+            life = 100;
+            b.setAlive(false);
+            return true;
+        }
+
+        return false;
     }
 }

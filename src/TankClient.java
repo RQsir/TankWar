@@ -19,6 +19,7 @@ public class TankClient extends Frame {
     List<Tank> enemyTanks = new ArrayList<Tank>();
     Wall w1 = new Wall(530, 400, 50,350);
     Wall w2 = new Wall(130, 100, 600,50);
+    Blood b = new Blood();
 
 
     //create a virtual screen image for double-buffer
@@ -31,6 +32,7 @@ public class TankClient extends Frame {
         myTank.hitWall(w1);
         myTank.hitWall(w2);
         myTank.collideTanks(enemyTanks);
+        myTank.eat(b);
 
        //draw missiles
        for(int i=0; i<missiles.size(); i++){
@@ -71,6 +73,9 @@ public class TankClient extends Frame {
        //draw wall
        w1.draw(g);
        w2.draw(g);
+
+       //draw blood
+        b.draw(g);
     }
 
     @Override
