@@ -22,6 +22,8 @@ public class Tank {
     private Missile m;
     private TankClient tc;
 
+    private BloodBar bb = new BloodBar();
+
     public static final int X_SPEED = 10;
     public static final int Y_SPEED = 10;
     public static final int WIDTH = 50;
@@ -171,6 +173,10 @@ public class Tank {
         //synchronize the direction for tank and barrel
         if(dir != Directiton.STOP)
             bDir = dir;
+
+        if(good)
+            bb.draw(g);
+
         //invoked by draw(), that's to be invoked by PaintThread
         move();
     }
@@ -340,5 +346,17 @@ public class Tank {
 
     public void setLife(int life) {
         this.life = life;
+    }
+
+    private class BloodBar {
+
+        public void draw(Graphics g){
+
+            Color c = g.getColor();
+            g.setColor(Color.RED);
+            g.drawRect(x, y-20, WIDTH,10);
+            int w = WIDTH*life/100;
+            g.fillRect(x,y-20, w,10);
+        }
     }
 }
