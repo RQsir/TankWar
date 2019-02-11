@@ -14,7 +14,7 @@ public class TankClient extends Frame {
 
     //init instance
     List<Missile> missiles = new ArrayList<Missile>();
-    Tank myTank = new Tank(50, 50, true, this, Tank.Directiton.STOP);
+    Tank myTank = new Tank(50, 50, true, this, Direction.STOP);
     List<Explosion> explosions = new ArrayList<Explosion>();
     List<Tank> enemyTanks = new ArrayList<Tank>();
     Wall w1 = new Wall(530, 400, 50,350);
@@ -132,7 +132,7 @@ public class TankClient extends Frame {
         if(enemyTanks.size() == 0){
 
             for(int i=0; i<8; i++){
-                Tank enemyTank = new Tank(800, (i+1)*100, false, this, Tank.Directiton.R);
+                Tank enemyTank = new Tank(800, (i+1)*100, false, this, Direction.R);
                 enemyTanks.add(enemyTank);
             }
         }
