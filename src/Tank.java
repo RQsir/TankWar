@@ -118,8 +118,8 @@ public class Tank {
             }
 
             //let enemyTank shoot
-            if(r.nextInt(30) > 25)
-                fire();
+//            if(r.nextInt(40) > 35)
+//                fire();
         }
     }
 
