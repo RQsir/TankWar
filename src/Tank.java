@@ -119,8 +119,8 @@ public class Tank {
             }
 
             //let enemyTank shoot
-            if(r.nextInt(30) > 25)
-                fire();
+//            if(r.nextInt(30) > 25)
+//                fire();
         }
     }
 
@@ -196,6 +196,12 @@ public class Tank {
                 break;
             case KeyEvent.VK_LEFT:
                 bL = true;
+                break;
+            case KeyEvent.VK_F2:
+                if(!alive && good){
+                    alive = true;
+                    life = 100;
+                }
                 break;
         }
 
@@ -320,6 +326,7 @@ public class Tank {
         if(this.getRect().intersects(t.getRect())){
 
             backward();
+            t.backward();
             return true;
         }
 
@@ -328,17 +335,18 @@ public class Tank {
 
     public boolean collideTanks(List<Tank> tanks){
 
+        boolean flag = false;
+
         for (Tank tank:tanks) {
 
             //avoid collide with itself
             if(this != tank){
 
-                if(collideTank(tank))
-                    return true;
+                flag = collideTank(tank);
             }
         }
 
-        return false;
+        return flag;
     }
 
     public int getLife() {

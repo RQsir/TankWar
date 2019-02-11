@@ -76,6 +76,9 @@ public class TankClient extends Frame {
 
        //draw blood
         b.draw(g);
+
+       //init enemyTanks
+       initEnemyTanks();
     }
 
     @Override
@@ -117,17 +120,22 @@ public class TankClient extends Frame {
         //add window size unchangeable
         this.setResizable(false);
 
-        //init enemyTanks
-        for(int i=0; i<8; i++){
-            Tank enemyTank = new Tank(800, (i+1)*100, false, this, Tank.Directiton.R);
-            enemyTanks.add(enemyTank);
-        }
-
         //invoke PaintThread
         new Thread(new PaintThread()).start();
 
         //invoke Key_Listener
         this.addKeyListener(new KeyMonitor());
+    }
+
+    public void initEnemyTanks(){
+        //init enemyTanks
+        if(enemyTanks.size() == 0){
+
+            for(int i=0; i<8; i++){
+                Tank enemyTank = new Tank(800, (i+1)*100, false, this, Tank.Directiton.R);
+                enemyTanks.add(enemyTank);
+            }
+        }
     }
 
     public static void main(String[] args){
