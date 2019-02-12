@@ -120,6 +120,11 @@ public class TankClient extends Frame {
         //add window size unchangeable
         this.setResizable(false);
 
+        for(int i=0; i<Integer.parseInt(PropertyMgr.getProporty("initEnemyTankCount")); i++){
+            Tank enemyTank = new Tank(800, (i+1)*100, false, this, Direction.R);
+            enemyTanks.add(enemyTank);
+        }
+
         //invoke PaintThread
         new Thread(new PaintThread()).start();
 
@@ -131,7 +136,7 @@ public class TankClient extends Frame {
         //init enemyTanks
         if(enemyTanks.size() == 0){
 
-            for(int i=0; i<8; i++){
+            for(int i=0; i<Integer.parseInt(PropertyMgr.getProporty("reproduceEnemyTankCount")); i++){
                 Tank enemyTank = new Tank(800, (i+1)*100, false, this, Direction.R);
                 enemyTanks.add(enemyTank);
             }
