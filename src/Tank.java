@@ -1,11 +1,53 @@
 import com.sun.xml.internal.bind.v2.model.core.BuiltinLeafInfo;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
 public class Tank {
+
+    private static HashMap<Direction, BufferedImage> myTanks = new HashMap<Direction,BufferedImage>();
+    private static HashMap<Direction,BufferedImage> enemyTanks = new HashMap<Direction,BufferedImage>();
+    public static final int X_SPEED = 10;
+    public static final int Y_SPEED = 10;
+    public static int WIDTH;
+    public static int HEIGHT;
+
+    static {
+        try {
+            myTanks.put(Direction.L, ImageIO.read(Tank.class.getClassLoader().getResource("images/myTank_L.png")));
+            myTanks.put(Direction.LU, ImageIO.read(Tank.class.getClassLoader().getResource("images/myTank_LU.png")));
+            myTanks.put(Direction.U, ImageIO.read(Tank.class.getClassLoader().getResource("images/myTank_U.png")));
+            myTanks.put(Direction.RU, ImageIO.read(Tank.class.getClassLoader().getResource("images/myTank_RU.png")));
+            myTanks.put(Direction.R, ImageIO.read(Tank.class.getClassLoader().getResource("images/myTank_R.png")));
+            myTanks.put(Direction.RD, ImageIO.read(Tank.class.getClassLoader().getResource("images/myTank_RD.png")));
+            myTanks.put(Direction.D, ImageIO.read(Tank.class.getClassLoader().getResource("images/myTank_D.png")));
+            myTanks.put(Direction.LD, ImageIO.read(Tank.class.getClassLoader().getResource("images/myTank_LD.png")));
+
+            enemyTanks.put(Direction.L, ImageIO.read(Tank.class.getClassLoader().getResource("images/enemyTank_L.png")));
+            enemyTanks.put(Direction.LU, ImageIO.read(Tank.class.getClassLoader().getResource("images/enemyTank_LU.png")));
+            enemyTanks.put(Direction.U, ImageIO.read(Tank.class.getClassLoader().getResource("images/enemyTank_U.png")));
+            enemyTanks.put(Direction.RU, ImageIO.read(Tank.class.getClassLoader().getResource("images/enemyTank_RU.png")));
+            enemyTanks.put(Direction.R, ImageIO.read(Tank.class.getClassLoader().getResource("images/enemyTank_R.png")));
+            enemyTanks.put(Direction.RD, ImageIO.read(Tank.class.getClassLoader().getResource("images/enemyTank_RD.png")));
+            enemyTanks.put(Direction.D, ImageIO.read(Tank.class.getClassLoader().getResource("images/enemyTank_D.png")));
+            enemyTanks.put(Direction.LD, ImageIO.read(Tank.class.getClassLoader().getResource("images/enemyTank_LD.png")));
+
+
+            WIDTH = ImageIO.read(Tank.class.getClassLoader().getResource("images/myTank_L.png")).getWidth();
+            HEIGHT = ImageIO.read(Tank.class.getClassLoader().getResource("images/myTank_L.png")).getHeight();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     private int x;
     private int y;
     private int preX;
@@ -24,10 +66,7 @@ public class Tank {
 
     private BloodBar bb = new BloodBar();
 
-    public static final int X_SPEED = 10;
-    public static final int Y_SPEED = 10;
-    public static final int WIDTH = 50;
-    public static final int HEIGHT = 50;
+
 
     //define a static random object to control enemyTank's direction
     private static Random r = new Random();
@@ -118,8 +157,8 @@ public class Tank {
             }
 
             //let enemyTank shoot
-//            if(r.nextInt(40) > 35)
-//                fire();
+            if(r.nextInt(40) > 35)
+                fire();
         }
     }
 
@@ -131,43 +170,11 @@ public class Tank {
             return;
         }
 
-        Color c = g.getColor();
-
-        //set tank's color
-        if(good == true) g.setColor(Color.red);
-        else g.setColor(Color.BLUE);
-        g.fillOval(x, y,WIDTH,HEIGHT);
-
-        //add a barrel for tank
-        g.setColor(Color.BLACK);
-        switch (bDir){
-            case L:
-                g.drawLine(x+WIDTH/2,y+HEIGHT/2,x,y+HEIGHT/2);
-                break;
-            case LU:
-                g.drawLine(x+WIDTH/2,y+HEIGHT/2,x,y);
-                break;
-            case U:
-                g.drawLine(x+WIDTH/2,y+HEIGHT/2,x+WIDTH/2,y);
-                break;
-            case RU:
-                g.drawLine(x+WIDTH/2,y+HEIGHT/2,x+WIDTH,y);
-                break;
-            case R:
-                g.drawLine(x+WIDTH/2,y+HEIGHT/2,x+WIDTH,y+HEIGHT/2);
-                break;
-            case RD:
-                g.drawLine(x+WIDTH/2,y+HEIGHT/2,x+WIDTH,y+HEIGHT);
-                break;
-            case D:
-                g.drawLine(x+WIDTH/2,y+HEIGHT/2,x+WIDTH/2,y+HEIGHT);
-                break;
-            case LD:
-                g.drawLine(x+WIDTH/2,y+HEIGHT/2,x,y+HEIGHT);
-                break;
-        }
-
-        g.setColor(c);
+        //draw tank
+        if(good)
+            g.drawImage(myTanks.get(bDir), x, y, null);
+        else
+            g.drawImage(enemyTanks.get(bDir), x, y, null);
 
         //synchronize the direction for tank and barrel
         if(dir != Direction.STOP)
@@ -213,7 +220,7 @@ public class Tank {
         //if a tank is dead, it cannot fire
         if(!alive)
             return;
-        int x = this.x + Tank.WIDTH/2 - Missile.WIDTH/2;
+        int x = this.x + Tank.WIDTH/2 - Missile.WIDTH/2 + 2;
         int y = this.y + Tank.HEIGHT/2 - Missile.HEIGHT/2;
         m = new Missile(x, y, bDir, this.tc, this.good);
         tc.missiles.add(m);
@@ -362,8 +369,8 @@ public class Tank {
 
             Color c = g.getColor();
             g.setColor(Color.RED);
-            g.drawRect(x, y-20, WIDTH,10);
-            int w = WIDTH*life/100;
+            g.drawRect(x, y-20, WIDTH-10,10);
+            int w = (WIDTH-10)*life/100;
             g.fillRect(x,y-20, w,10);
         }
     }

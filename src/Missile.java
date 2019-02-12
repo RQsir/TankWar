@@ -1,12 +1,46 @@
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 public class Missile {
 
-    public static final int X_SPEED = 20;
-    public static final int Y_SPEED = 20;
-    public static final int WIDTH = 20;
-    public static final int HEIGHT = 20;
+    private static HashMap<Direction, BufferedImage> myMissiles = new HashMap<Direction,BufferedImage>();
+    private static HashMap<Direction,BufferedImage> enemyMissiles = new HashMap<Direction,BufferedImage>();
+    public static final int X_SPEED = 30;
+    public static final int Y_SPEED = 30;
+    public static int WIDTH;
+    public static int HEIGHT;
+
+    static {
+        try {
+            myMissiles.put(Direction.L, ImageIO.read(Tank.class.getClassLoader().getResource("images/myMissile_L.png")));
+            myMissiles.put(Direction.LU, ImageIO.read(Tank.class.getClassLoader().getResource("images/myMissile_LU.png")));
+            myMissiles.put(Direction.U, ImageIO.read(Tank.class.getClassLoader().getResource("images/myMissile_U.png")));
+            myMissiles.put(Direction.RU, ImageIO.read(Tank.class.getClassLoader().getResource("images/myMissile_RU.png")));
+            myMissiles.put(Direction.R, ImageIO.read(Tank.class.getClassLoader().getResource("images/myMissile_R.png")));
+            myMissiles.put(Direction.RD, ImageIO.read(Tank.class.getClassLoader().getResource("images/myMissile_RD.png")));
+            myMissiles.put(Direction.D, ImageIO.read(Tank.class.getClassLoader().getResource("images/myMissile_D.png")));
+            myMissiles.put(Direction.LD, ImageIO.read(Tank.class.getClassLoader().getResource("images/myMissile_LD.png")));
+
+            enemyMissiles.put(Direction.L, ImageIO.read(Tank.class.getClassLoader().getResource("images/enemyMissile_L.png")));
+            enemyMissiles.put(Direction.LU, ImageIO.read(Tank.class.getClassLoader().getResource("images/enemyMissile_LU.png")));
+            enemyMissiles.put(Direction.U, ImageIO.read(Tank.class.getClassLoader().getResource("images/enemyMissile_U.png")));
+            enemyMissiles.put(Direction.RU, ImageIO.read(Tank.class.getClassLoader().getResource("images/enemyMissile_RU.png")));
+            enemyMissiles.put(Direction.R, ImageIO.read(Tank.class.getClassLoader().getResource("images/enemyMissile_R.png")));
+            enemyMissiles.put(Direction.RD, ImageIO.read(Tank.class.getClassLoader().getResource("images/enemyMissile_RD.png")));
+            enemyMissiles.put(Direction.D, ImageIO.read(Tank.class.getClassLoader().getResource("images/enemyMissile_D.png")));
+            enemyMissiles.put(Direction.LD, ImageIO.read(Tank.class.getClassLoader().getResource("images/enemyMissile_LD.png")));
+
+            WIDTH = ImageIO.read(Tank.class.getClassLoader().getResource("images/myMissile_L.png")).getWidth();
+            HEIGHT = ImageIO.read(Tank.class.getClassLoader().getResource("images/myMissile_L.png")).getHeight();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     private  TankClient tc;
 
@@ -36,17 +70,12 @@ public class Missile {
             return;
         }
 
-        Color c = g.getColor();
 
         if(good){
-            g.setColor(Color.RED);
-            g.fillOval(x, y, WIDTH,HEIGHT);
+            g.drawImage(myMissiles.get(dir), x, y, null);
         }else {
-            g.setColor(Color.BLUE);
-            g.fillOval(x, y, WIDTH,HEIGHT);
+            g.drawImage(enemyMissiles.get(dir), x, y, null);
         }
-
-        g.setColor(c);
 
         move();
     }
