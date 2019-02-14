@@ -25,20 +25,17 @@ public class Tank {
     //define a static random object to control enemyTank's direction
     private static Random r = new Random();
 
-    //define 9 directions
-    enum Directiton{L,LU,U,RU,R,RD,D,LD,STOP}
-
     //generate dirs arrays
-    Directiton[] dirs = Directiton.values();
+    Direction[] dirs = Direction.values();
 
     //define tank walk steps
     private int step = r.nextInt(13) + 3;
 
 
     //init tank condition
-    Directiton dir = Directiton.STOP;
+    Direction dir = Direction.STOP;
     //define barrel direction
-    Directiton bDir = Directiton.D;
+    Direction bDir = Direction.D;
 
     //define 4 boolean values represented for left, up, right, down
     private boolean bL = false, bU = false, bR = false, bD = false;
@@ -49,7 +46,7 @@ public class Tank {
         this.good = good;
     }
 
-    public Tank(int x, int y, boolean good ,TankClient tc, Directiton dir){
+    public Tank(int x, int y, boolean good ,TankClient tc, Direction dir){
         this(x,y,good);
         this.tc = tc;
         this.dir = dir;
@@ -161,7 +158,7 @@ public class Tank {
         g.setColor(c);
 
         //synchronize the direction for tank and barrel
-        if(dir != Directiton.STOP)
+        if(dir != Direction.STOP)
             bDir = dir;
         //invoked by draw(), that's to be invoked by PaintThread
         move();
@@ -222,30 +219,30 @@ public class Tank {
 
     public void getDirection(){
         if(bL==true && !bU==true && !bR == true && !bD == true){
-            dir = Directiton.L;
+            dir = Direction.L;
         }
         else if(bL==true && bU==true && !bR == true && !bD == true){
-            dir = Directiton.LU;
+            dir = Direction.LU;
         }
         else if(!bL==true && bU==true && !bR == true && !bD == true){
-            dir = Directiton.U;
+            dir = Direction.U;
         }
         else if(!bL==true && bU==true && bR == true && !bD == true){
-            dir = Directiton.RU;
+            dir = Direction.RU;
         }
         else if(!bL==true && !bU==true && bR == true && !bD == true){
-            dir = Directiton.R;
+            dir = Direction.R;
         }
         else if(!bL==true && !bU==true && bR == true && bD == true){
-            dir = Directiton.RD;
+            dir = Direction.RD;
         }
         else if(!bL==true && !bU==true && !bR == true && bD == true){
-            dir = Directiton.D;
+            dir = Direction.D;
         }
         else if(bL==true && !bU==true && !bR == true && !bD == true){
-            dir = Directiton.LD;
+            dir = Direction.LD;
         }else
-            dir = Directiton.STOP;
+            dir = Direction.STOP;
     }
 
     //get Rectangle that surrounds the Tank

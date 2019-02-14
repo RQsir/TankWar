@@ -3,6 +3,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.net.ServerSocket;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,9 +15,10 @@ public class TankClient extends Frame {
 
     //init instance
     List<Missile> missiles = new ArrayList<Missile>();
-    Tank myTank = new Tank(50, 50, true, this, Tank.Directiton.STOP);
+    Tank myTank = new Tank(50, 50, true, this, Direction.STOP);
     List<Explosion> explosions = new ArrayList<Explosion>();
     List<Tank> enemyTanks = new ArrayList<Tank>();
+    NetClient nc = new NetClient();
 
 
     //create a virtual screen image for double-buffer
@@ -93,17 +95,13 @@ public class TankClient extends Frame {
         //add window size unchangeable
         this.setResizable(false);
 
-        //init enemyTanks
-        for(int i=0; i<5; i++){
-            Tank enemyTank = new Tank(50, 50 + (i+1)*100, false, this, Tank.Directiton.R);
-            enemyTanks.add(enemyTank);
-        }
-
         //invoke PaintThread
         new Thread(new PaintThread()).start();
 
         //invoke Key_Listener
         this.addKeyListener(new KeyMonitor());
+
+        nc.connect("127.0.0.1", TankServer.TCP_PORT);
     }
 
     public static void main(String[] args){

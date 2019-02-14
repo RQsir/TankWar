@@ -15,15 +15,15 @@ public class Missile {
     private boolean good;
 
     private int x, y;
-    private Tank.Directiton dir;
+    private Direction dir;
 
-    public Missile(int x, int y, Tank.Directiton dir) {
+    public Missile(int x, int y, Direction dir) {
         this.x = x;
         this.y = y;
         this.dir = dir;
     }
 
-    public Missile(int x, int y, Tank.Directiton dir, TankClient tc, boolean good){
+    public Missile(int x, int y, Direction dir, TankClient tc, boolean good){
         this(x, y, dir);
         this.tc = tc;
         this.good = good;

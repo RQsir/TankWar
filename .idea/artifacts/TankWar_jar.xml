@@ -1,0 +1,13 @@
+<component name="ArtifactManager">
+  <artifact type="apk" name="TankWar:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/TankWar_jar</output-path>
+    <properties id="android-properties">
+      <options>
+        <option name="keyStoreUrl" value="file://" />
+      </options>
+    </properties>
+    <root id="archive" name="TankWar_jar.apk">
+      <element id="module-output" name="TankWar" />
+    </root>
+  </artifact>
+</component>
