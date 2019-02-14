@@ -7,6 +7,7 @@ import java.util.Random;
 public class Tank {
     private int x;
     private int y;
+    int id;
 
     //to verify whether a tank belongs to mine or enemies
     private boolean good;
@@ -125,6 +126,7 @@ public class Tank {
         if(good == true) g.setColor(Color.red);
         else g.setColor(Color.BLUE);
         g.fillOval(x, y,WIDTH,HEIGHT);
+        g.drawString("id:"+id,x,y-10);
 
         //add a barrel for tank
         g.setColor(Color.BLACK);

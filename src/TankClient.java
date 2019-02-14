@@ -3,7 +3,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.net.ServerSocket;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +17,7 @@ public class TankClient extends Frame {
     Tank myTank = new Tank(50, 50, true, this, Direction.STOP);
     List<Explosion> explosions = new ArrayList<Explosion>();
     List<Tank> enemyTanks = new ArrayList<Tank>();
-    NetClient nc = new NetClient();
+    NetClient nc = new NetClient(this);
 
 
     //create a virtual screen image for double-buffer
