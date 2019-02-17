@@ -9,6 +9,14 @@ public class Tank {
     private int y;
     int id;
 
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
     //to verify whether a tank belongs to mine or enemies
     private boolean good;
 
